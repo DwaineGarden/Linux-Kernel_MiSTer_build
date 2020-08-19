@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:latest
 WORKDIR /root/
 SHELL ["/bin/bash", "-c"]
 ENV ARCH arm
