@@ -9,9 +9,9 @@ RUN (apt-get update; apt-get -y upgrade; apt-get -y install build-essential bc l
 # RUN wget -q -O - https://developer.arm.com/-/media/Files/downloads/gnu-a/8.3-2019.03/binrel/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf.tar.xz | tar xJf -
 RUN wget -q -O - https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz | tar xJf -
 RUN wget -q -O - https://codeload.github.com/MiSTer-devel/Linux-Kernel_MiSTer/tar.gz/socfpga-4.19-MiSTer | tar xzf -
-RUN make -C Linux-Kernel_MiSTer-socfpga-4.19-MiSTer --quiet clean mrproper MiSTer_defconfig zImage modules dtbs
+RUN make -j4 -C Linux-Kernel_MiSTer-socfpga-4.19-MiSTer --quiet clean mrproper MiSTer_defconfig zImage modules dtbs
 CMD test -f /mnt/MiSTer_config && cp -v /mnt/MiSTer_config Linux-Kernel_MiSTer-socfpga-4.19-MiSTer/.config ;\
-    make -C Linux-Kernel_MiSTer-socfpga-4.19-MiSTer --quiet menuconfig zImage modules dtbs ;\
+    make -j4 -C Linux-Kernel_MiSTer-socfpga-4.19-MiSTer --quiet menuconfig zImage modules dtbs ;\
     cat Linux-Kernel_MiSTer-socfpga-4.19-MiSTer/arch/arm/boot/zImage \
     Linux-Kernel_MiSTer-socfpga-4.19-MiSTer/arch/arm/boot/dts/socfpga_cyclone5_de10_nano.dtb \
     > zImage_dtb ;\
